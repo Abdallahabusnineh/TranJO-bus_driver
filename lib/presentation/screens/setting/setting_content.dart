@@ -200,6 +200,7 @@ class SettingContent extends StatelessWidget {
           height: 30,
         ),
         Container(
+          decoration: const BoxDecoration(),
           child: ElevatedButton(
             onPressed: () {
               navigateTo(context, LoginScreenView());
@@ -216,9 +217,11 @@ class SettingContent extends StatelessWidget {
                   color: Colors.white,
                 )),
           ),
-          decoration: const BoxDecoration(),
+
+
         )
       ]),
     );
   }
 }
+
