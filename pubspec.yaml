@@ -46,6 +46,7 @@ dependencies:
   get_it: ^7.6.4
   google_sign_in: ^6.1.5
   animated_toggle_switch: ^0.8.2
+  awesome_dialog: ^3.2.1
   dartz: ^0.10.1
   url_launcher:
   google_maps_flutter: ^2.5.0
