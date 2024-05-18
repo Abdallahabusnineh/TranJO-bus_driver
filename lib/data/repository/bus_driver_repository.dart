@@ -5,13 +5,15 @@ import 'package:bus_driver/data/datasource/remote_datasource.dart';
 import 'package:bus_driver/domain/base_repository/base_trasnsjo_repository.dart';
 import 'package:dartz/dartz.dart';
 
+import '../../domain/entites/login_entites.dart';
+
 class Repository extends BaseRepository{
   final BaseRemoteDataSource baseRemoteDataSource;
 
   Repository(this.baseRemoteDataSource);
 
   @override
-  Future<Either<Failure, String>> loginApp(LoginParameter parameters) async {
+  Future<Either<Failure, LoginUserData>> loginApp(LoginParameter parameters) async {
     final result=await baseRemoteDataSource.loginApp(parameters);
  try{
    return Right(result );

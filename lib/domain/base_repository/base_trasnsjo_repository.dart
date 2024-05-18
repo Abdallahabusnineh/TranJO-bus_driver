@@ -4,5 +4,6 @@ import 'package:bus_driver/domain/entites/login_entites.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class BaseRepository{
-  Future<Either<Failure,String>> loginApp(LoginParameter  parameters);
+  Future<Either<Failure,LoginUserData>> loginApp(LoginParameter  parameters);
+
 }

@@ -47,7 +47,6 @@ dependencies:
   google_sign_in: ^6.1.5
   animated_toggle_switch: ^0.8.2
   dartz: ^0.10.1
-  url_launcher:
   google_maps_flutter: ^2.5.0
   firebase_auth: ^4.12.1
   firebase_storage: ^11.4.1

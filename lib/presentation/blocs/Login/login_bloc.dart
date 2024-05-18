@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:bus_driver/core/base_usecase/base_usecase.dart';
+import 'package:bus_driver/core/utils/app_const.dart';
+import 'package:bus_driver/core/utils/cash_helper.dart';
 import 'package:bus_driver/domain/usecases/login_usecase.dart';
 import 'package:flutter/material.dart';
 part 'login_event.dart';
@@ -31,7 +34,9 @@ class LoginBloc extends Bloc<AbstractLoginEvent, LoginState> {
         print('carlossss ${l.message}');
         emit(LoginServerFailure(l.message));
       }, (r) {
-        //  if (r.)
+        AppConst.token=r.accessToken;
+        CashHelper.saveData(key: 'token', value: r.accessToken).
+        then((value) => print('save token'));
         emit(LoginSuccessState("Login Successfully"));
 
         // else
