@@ -6,12 +6,12 @@ import 'package:bus_driver/data/modules/login_model.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class BaseRemoteDataSource{
-  Future<String> loginApp(LoginParameter parameters);
+  Future<LoginUserDataModel> loginApp(LoginParameter parameters);
 
 }
 class RemoteDataSource extends BaseRemoteDataSource{
   @override
-  Future<String> loginApp(LoginParameter parameters) async{
+  Future<LoginUserDataModel> loginApp(LoginParameter parameters) async{
    final result =await DioHelper.postData(url: 'login', data: {
      'email':parameters.email,
      'password':parameters.password,
