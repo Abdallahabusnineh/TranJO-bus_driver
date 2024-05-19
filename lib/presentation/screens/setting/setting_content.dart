@@ -1,12 +1,19 @@
 import 'package:bus_driver/core/common_widgets/navigations_types.dart';
+import 'package:bus_driver/presentation/blocs/logout/logout_bloc.dart';
 import 'package:bus_driver/presentation/screens/login/login_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../core/common_widgets/show_toast.dart';
 
 class SettingContent extends StatelessWidget {
   const SettingContent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    LogoutBloc blocLogout = BlocProvider.of<LogoutBloc>(context);
+    LogoutBloc blocListenerLogOut = context.watch<LogoutBloc>();
+
     return SingleChildScrollView(
       child: Column(children: [
         Container(
@@ -199,26 +206,37 @@ class SettingContent extends StatelessWidget {
         const SizedBox(
           height: 30,
         ),
-        Container(
-          decoration: const BoxDecoration(),
-          child: ElevatedButton(
-            onPressed: () {
-              navigateTo(context, LoginScreenView());
-            },
-            style: ElevatedButton.styleFrom(
-                padding:
+        BlocBuilder<LogoutBloc, LogoutState>(
+          builder: (context, state) {
+            return Container(
+              decoration: const BoxDecoration(),
+              child: ElevatedButton(
+                onPressed: () {
+                  blocLogout.add(LogoutStartProcessEvent());
+                  if (state is LogoutSuccessState) {
+                    navigateTo(context, LoginScreenView());
+                    showToast(
+                        text: 'Logout is done',
+                        state: ToastState.SUCCESS);
+                  }
+
+                },
+                style: ElevatedButton.styleFrom(
+                    padding:
                     const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
-                // Adjust padding for bigger size
-                backgroundColor:  Color.fromARGB(255,0,0,0)),
-            child: const Text('Log Out',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                )),
-          ),
+                    // Adjust padding for bigger size
+                    backgroundColor: Color(0xFF607D8B)),
+                child: const Text('Log Out',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    )),
+              ),
 
 
+            );
+          },
         )
       ]),
     );

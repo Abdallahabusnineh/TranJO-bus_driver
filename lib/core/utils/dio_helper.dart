@@ -6,7 +6,7 @@ class DioHelper {
   {
     dio=Dio(
       BaseOptions(
-        baseUrl: 'https://tran-4rhc.onrender.com/api/driver/',
+        baseUrl: 'https://tran-4rhc.onrender.com',
         receiveDataWhenStatusError: true,//هات الداتا حتى لو ال status ايرور
     /* headers: {
           'Content-Type': 'application/json',// ال headers الثابتة بحطها هون دايما
@@ -23,8 +23,8 @@ class DioHelper {
   {
     dio?.options.headers={
       'Content-Type':'application/json',
-      'lang':lang,
-      'Authorization':token
+      if (token != null) 'Authorization': "Bearer $token"
+
 
     };
 
@@ -44,8 +44,7 @@ static Future<Response> postData({
     )async{
   dio?.options.headers={
     'Content-Type':'application/json',
-    'lang':lang,
-    'Authorization':token??''
+    if (token != null) 'Authorization': "Bearer $token"
 
   };
     return dio!.post(
@@ -69,7 +68,7 @@ static Future<Response> postData({
    dio?.options.headers={
      'Content-Type':'application/json',
      'lang':lang,
-     'Authorization':token??''
+     if (token != null) 'Authorization': "Bearer $token"
 
    };
    return dio!.put(

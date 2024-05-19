@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:bus_driver/core/base_usecase/base_usecase.dart';
 import 'package:bus_driver/core/utils/app_const.dart';
 import 'package:dio/dio.dart';
 import '../../core/error/exceptions.dart';
@@ -16,22 +19,27 @@ class DriverControlDataSource extends BaseDriverControlDataSource
   @override
   Future<String> getToggleWorkingStatus()async {
     try {
-      final res = await DioHelper.postData(
-          url:"toggleWorkingStatus",
-          token: AppConst.token,
+      final result = await DioHelper.postData(
+          url:toggleWorkingStatus,
+          token: token,
         data: {},
           );
 
-      if (res.statusCode == 200 ||res.statusCode == 204||res.statusCode == 202) {
-        return "success toggle";
+      if (result.statusCode == 200 ) {
+        return result.data;
       } else {
         throw ServerExceptions(
-            errorMessageModel: ErrorMessageModel.fromJson(res.statusMessage!));
+            errorMessageModel: ErrorMessageModel.fromJson(result.statusMessage!));
       }
     } on DioException catch (e) {
+      log("toggle data source ${e.requestOptions.uri}");
+      log("toggle data source  ${e.requestOptions.uri}");
+      log("toggle data source  ${e.response!.statusCode}");
+      log("toggle data source  ${e.response!.data}");
+      log("toggle data source ${e.requestOptions.uri}");
       throw ServerExceptions(
           errorMessageModel:
-          ErrorMessageModel.fromJson("Error"));
+          ErrorMessageModel.fromJson(e.message!));
     } catch (e) {
       throw ServerExceptions(
           errorMessageModel: ErrorMessageModel.fromJson(e.toString()));
@@ -41,22 +49,29 @@ class DriverControlDataSource extends BaseDriverControlDataSource
   @override
   Future<String> getDropPas()async {
     try {
-      final res = await DioHelper.postData(
-        url:"drop-pas",
-        token: AppConst.token,
+      final result = await DioHelper.postData(
+        url:dropPassenger,
+        token: token,
         data: {},
       );
 
-      if (res.statusCode == 200 ||res.statusCode == 204||res.statusCode == 202) {
-        return "success Drop ";
+      if (result.statusCode == 200) {
+        return result.data;
       } else {
+
         throw ServerExceptions(
-            errorMessageModel: ErrorMessageModel.fromJson(res.statusMessage!));
+            errorMessageModel: ErrorMessageModel.fromJson(result.statusMessage!));
       }
     } on DioException catch (e) {
+      log("drop pass datasource ${e.requestOptions.uri}");
+      log("drop pass datasource ${e.requestOptions.uri}");
+      log("drop pass datasource  ${e.response!.statusCode}");
+      log("drop pass datasource ${e.response!.data}");
+      log("drop pass datasource ${e.requestOptions.uri}");
+
       throw ServerExceptions(
           errorMessageModel:
-          ErrorMessageModel.fromJson("Error"));
+          ErrorMessageModel.fromJson("Error ${e.message}"));
     } catch (e) {
       throw ServerExceptions(
           errorMessageModel: ErrorMessageModel.fromJson(e.toString()));
@@ -66,22 +81,27 @@ class DriverControlDataSource extends BaseDriverControlDataSource
   @override
   Future<String> getAddPas()async {
     try {
-      final res = await DioHelper.postData(
-        url:"add-pas",
-        token: AppConst.token,
+      final result = await DioHelper.postData(
+        url:addPassenger,
+        token: token,
         data: {},
       );
 
-      if (res.statusCode == 200 ||res.statusCode == 204||res.statusCode == 202) {
-        return "success add ";
+      if (result.statusCode == 200) {
+        return result.data;
       } else {
         throw ServerExceptions(
-            errorMessageModel: ErrorMessageModel.fromJson(res.statusMessage!));
+            errorMessageModel: ErrorMessageModel.fromJson(result.statusMessage!));
       }
     } on DioException catch (e) {
+      log("add pass datasource ${e.requestOptions.uri}");
+      log("add pass datasource ${e.requestOptions.uri}");
+      log("add pass datasource ${e.response!.statusCode}");
+      log("add pass datasource ${e.response!.data}");
+      log("add pass datasource ${e.requestOptions.uri}");
       throw ServerExceptions(
           errorMessageModel:
-          ErrorMessageModel.fromJson("Error"));
+          ErrorMessageModel.fromJson(e.message!));
     } catch (e) {
       throw ServerExceptions(
           errorMessageModel: ErrorMessageModel.fromJson(e.toString()));
@@ -92,13 +112,13 @@ class DriverControlDataSource extends BaseDriverControlDataSource
   Future<String> getUpdateBusLocation() async{
     try {
       final res = await DioHelper.postData(
-        url:"updateBusLocation",
-        token: AppConst.token,
+        url:updateBusLocation,
+        token: token,
         data: {},
       );
 
       if (res.statusCode == 200 ||res.statusCode == 204||res.statusCode == 202) {
-        return "success updateBusLocation ";
+        return res.data;
       } else {
         throw ServerExceptions(
             errorMessageModel: ErrorMessageModel.fromJson(res.statusMessage!));

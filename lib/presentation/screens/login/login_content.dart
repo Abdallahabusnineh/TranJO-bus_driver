@@ -1,28 +1,26 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:bus_driver/core/common_widgets/navigations_types.dart';
 import 'package:bus_driver/presentation/blocs/Login/login_bloc.dart';
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 class LoginContent extends StatelessWidget {
-   LoginContent({Key? key}) : super(key: key);
+  LoginContent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-   LoginBloc  bloc=BlocProvider.of<LoginBloc>(context);
-   LoginBloc  blocListener=context.watch<LoginBloc>();
+    LoginBloc bloc = BlocProvider.of<LoginBloc>(context);
+    LoginBloc blocListener = context.watch<LoginBloc>();
     return Form(
       key: bloc.formKey,
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-              Colors.black54,
-              Colors.black,
-              Colors.black,
+          Colors.indigoAccent,
+          Colors.deepPurple.shade700,
+          Colors.blueAccent,
 
-            ])),
+        ])),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -77,7 +75,7 @@ class LoginContent extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: [
                                 const BoxShadow(
-                                    color: Colors.black54,
+                                    color: Colors.indigo,
                                     blurRadius: 20,
                                     offset: Offset(0, 10))
                               ]),
@@ -97,9 +95,10 @@ class LoginContent extends StatelessWidget {
                                     decoration: InputDecoration(
                                         hintText: 'email',
                                         prefixIcon: Icon(Icons.person),
-                                        hintStyle: TextStyle(color: Colors.grey),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
                                         border: InputBorder.none),
-                                    validator: (value ) {
+                                    validator: (value) {
                                       if (value!.isEmpty)
                                         return 'Please enter email ';
                                     },
@@ -121,16 +120,21 @@ class LoginContent extends StatelessWidget {
                                     decoration: InputDecoration(
                                         hintText: 'Password',
                                         prefixIcon: Icon(Icons.security),
-                                        suffixIcon:IconButton(onPressed: (){
-                                          bloc.add(ShowPasswordEvent());
-                                        },icon: blocListener.showPassword?Icon(Icons.remove_red_eye):Icon(Icons.remove_red_eye_outlined)),
-                                        hintStyle: TextStyle(color: Colors.grey),
+                                        suffixIcon: IconButton(
+                                            onPressed: () {
+                                              bloc.add(ShowPasswordEvent());
+                                            },
+                                            icon: blocListener.showPassword
+                                                ? Icon(Icons.remove_red_eye)
+                                                : Icon(Icons
+                                                    .remove_red_eye_outlined)),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
                                         border: InputBorder.none),
                                     validator: (value) {
                                       if (value!.isEmpty)
                                         return 'password is too short';
                                     },
-
                                   ),
                                 ),
                               )
@@ -140,29 +144,39 @@ class LoginContent extends StatelessWidget {
                         const SizedBox(
                           height: 40,
                         ),
-                    blocListener.state is LoginLoadingState?Center(child: CircularProgressIndicator(color: Colors.black54,)):
-                    Container(
-                        height: 50,
-                        margin: const EdgeInsets.symmetric(horizontal: 50),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Colors.black87),
-                        child: Center(
-                            child: FadeInUp(
-                              duration: Duration(milliseconds: 1000),
-                              child: TextButton(
-                                onPressed: () {
-                                  if(bloc.formKey.currentState!.validate())
-                                    bloc.add(LoginStartProcessEvent(email: bloc.emailNameController.text, password: bloc.passwordController.text));
-                                },
-                                child: Text(
-                                  'Login',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ))),
+                        blocListener.state is LoginLoadingState
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                color: Colors.black54,
+                              ))
+                            : Container(
+                                height: 50,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 50),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Colors.indigo.shade500),
+                                child: Center(
+                                    child: FadeInUp(
+                                  duration: Duration(milliseconds: 1000),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      if (bloc.formKey.currentState!.validate())
+                                        bloc.add(LoginStartProcessEvent(
+                                            email:
+                                                bloc.emailNameController.text,
+                                            password:
+                                                bloc.passwordController.text));
+                                 print('email ${bloc.emailNameController.text} password ${    bloc.passwordController.text}');
+                                    },
+                                    child: Text(
+                                      'Login',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ))),
                         SizedBox(
                           height: 10,
                         ),

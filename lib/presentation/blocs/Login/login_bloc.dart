@@ -24,33 +24,32 @@ class LoginBloc extends Bloc<AbstractLoginEvent, LoginState> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   LoginUseCase loginUseCase;
 
-  void _onLoginStartProcessEvent(
-      LoginStartProcessEvent event, Emitter emit) async {
-    emit(LoginLoadingState());
-    try{
-      final result =
-      await loginUseCase.call(LoginParameter(event.email, event.password));
-      result.fold((l) {
-        print('carlossss ${l.message}');
-        emit(LoginServerFailure(l.message));
-      }, (r) {
-        AppConst.token=r.accessToken;
-        CashHelper.saveData(key: 'token', value: r.accessToken).
-        then((value) => print('save token'));
-        emit(LoginSuccessState("Login Successfully"));
 
-        // else
-        //emit(LoginErrorState(r));
-      });
-    }
-    catch(e){
-      emit(LoginServerFailure(e.toString()));
-    }
-  }
 
   FutureOr<void> _onShowPasswordEvent(
       ShowPasswordEvent event, Emitter<LoginState> emit) {
     showPassword = !showPassword;
     emit(IconDataChanged());
+  }
+
+  Future<FutureOr<void>> _onLoginStartProcessEvent(LoginStartProcessEvent event, Emitter<LoginState> emit) async {
+    emit(LoginLoadingState());
+    try{
+      final result =
+          await loginUseCase.call(LoginParameter(event.email, event.password));
+      result.fold((l) {
+        print('carlossss ${l.message}');
+        emit(LoginServerFailure("login left failure ${l.message}"));
+      }, (r) {
+        CashHelper.saveData(key: "token", value: r.accessToken).
+        then((value) => print('save token  $token'));
+        token=r.accessToken;
+        emit(LoginSuccessState("Login Successfully"));
+      });
+    }
+    catch(e){
+      print('error catch ${e.toString()}');
+      emit(LoginErrorState('login failure ${e.toString()}'));
+    }
   }
 }

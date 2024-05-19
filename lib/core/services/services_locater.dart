@@ -12,6 +12,11 @@ import 'package:bus_driver/domain/usecases/update_bus_location_usecase.dart';
 import 'package:bus_driver/presentation/blocs/Login/login_bloc.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../data/datasource/logout_remotedatasource.dart';
+import '../../data/repository/logout_repository.dart';
+import '../../domain/base_repository/logout_base_repository.dart';
+import '../../domain/usecases/logout_usecase.dart';
+
 final sl = GetIt.instance;
 class ServicesLocater {
   void init() {
@@ -20,7 +25,7 @@ class ServicesLocater {
 
 
     //Bloc register
-    sl.registerFactory(() => LoginBloc(sl()));
+
  //UseCase
     sl.registerLazySingleton(() => LoginUseCase(sl()));
 //Repository
@@ -43,5 +48,15 @@ class ServicesLocater {
     sl.registerLazySingleton<BaseDriverControlRepository>(() =>(DriverControlRepository(sl())) );
     //=============================DataSource==========================
     sl.registerLazySingleton<BaseDriverControlDataSource>(() =>DriverControlDataSource() );
+
+  //logout
+
+    sl.registerLazySingleton(() => LogOutUseCase(sl()));
+    sl.registerLazySingleton<LogOutBaseRepository>(() => LogOutRepository(
+        sl()));
+    sl.registerLazySingleton<LogOutBaseDataSource>(() => LogOutDataSource());
+
+
+
   }
 }

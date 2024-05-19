@@ -2,7 +2,6 @@ import 'package:bus_driver/presentation/blocs/bottom_navigation_bar/bottom_navig
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-
 class NavigationBarContent extends StatelessWidget {
   const NavigationBarContent({Key? key}) : super(key: key);
 
@@ -21,9 +20,8 @@ class NavigationBarContent extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 16),
                 activeColor: Colors.white,
-
                 //backgroundColor: Colors.blue.shade700,
-                tabBackgroundColor: Colors.black,
+                tabBackgroundColor: Colors.blueGrey,
                 gap: 30,
                 iconSize: 35,
                 tabs: [

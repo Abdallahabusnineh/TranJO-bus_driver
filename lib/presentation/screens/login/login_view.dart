@@ -13,7 +13,7 @@ class LoginScreenView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<LoginBloc>(),
+      create: (context) => LoginBloc(sl()),
       child: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
           print(state);
