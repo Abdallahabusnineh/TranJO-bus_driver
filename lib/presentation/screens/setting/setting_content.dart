@@ -1,4 +1,6 @@
 import 'package:bus_driver/core/common_widgets/navigations_types.dart';
+import 'package:bus_driver/core/utils/app_const.dart';
+import 'package:bus_driver/presentation/blocs/driver_control_bloc/driver_control_bloc.dart';
 import 'package:bus_driver/presentation/blocs/logout/logout_bloc.dart';
 import 'package:bus_driver/presentation/screens/login/login_view.dart';
 import 'package:flutter/material.dart';
@@ -203,9 +205,6 @@ class SettingContent extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(
-          height: 30,
-        ),
         BlocBuilder<LogoutBloc, LogoutState>(
           builder: (context, state) {
             return Container(
@@ -237,6 +236,9 @@ class SettingContent extends StatelessWidget {
 
             );
           },
+        ),
+        const SizedBox(
+          height: 30,
         )
       ]),
     );

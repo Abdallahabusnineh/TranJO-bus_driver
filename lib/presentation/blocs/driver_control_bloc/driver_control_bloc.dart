@@ -21,7 +21,7 @@ class DriverControlBloc extends Bloc<AbstractDriverControlEvent, DriverControlSt
 
   AddPasUseCase addBusUesCase;
   ToggleUseCase toggleUseCase;
-bool toggle=false;
+ bool toggle=false;
   DropPasUseCase dropPasUseCase;
 
   Future<FutureOr<void>> _onToggleEvent(ToggleEvent event,
@@ -46,7 +46,10 @@ bool toggle=false;
    try {
       emit(LoadingDropPassenger());
       final result = await dropPasUseCase.call(NoParameters());
-      result.fold((l) => emit(ServerErrorDropPassenger(error: l.message)),
+      result.fold((l) {
+        print("drop pass {$l.message}");
+        emit(ServerErrorDropPassenger(error: l.message));
+      },
           (r) {
             print('drop success');
 
@@ -65,7 +68,11 @@ bool toggle=false;
     try{
       emit(LoadingAddPassenger());
       final result = await addBusUesCase.call(const NoParameters());
-      result.fold((l) => emit(ServerErrorAddPassenger(error: l.message)),
+      result.fold((l) {
+        print("add pass {$l.message}");
+
+        emit(ServerErrorAddPassenger(error: l.message));
+      },
           (r) {
             print('add success');
 

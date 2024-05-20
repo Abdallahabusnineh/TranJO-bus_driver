@@ -50,7 +50,7 @@ Widget build(BuildContext context) {
                   return AnimatedToggleSwitch<bool>.size(
                     current: bloc.toggle,
                     //bloc.toggle,
-                    values: [false, true],
+                    values: [true,false],
                     iconOpacity: 2,
                     indicatorSize: const Size.fromWidth(100),
                     customIconBuilder: (context, local, global) => Text(
