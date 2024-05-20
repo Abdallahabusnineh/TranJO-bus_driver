@@ -3,13 +3,13 @@ import 'package:bus_driver/core/error/failure.dart';
 import 'package:bus_driver/domain/base_repository/driver_control.dart';
 import 'package:dartz/dartz.dart';
 
-class DropPasUseCase extends BaseUseCase<String,NoParameters>
+class DropPasUseCase extends BaseUseCase<int,NoParameters>
 {
   BaseDriverControlRepository baseDriverControlRepository;
   DropPasUseCase(this.baseDriverControlRepository);
 
   @override
-  Future<Either<Failure, String>> call(NoParameters parameters) async {
+  Future<Either<Failure, int>> call(NoParameters parameters) async {
   return await baseDriverControlRepository.getDropBas();
   }
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:bus_driver/core/common_widgets/show_toast.dart';
+import 'package:bus_driver/core/utils/app_const.dart';
 import 'package:bus_driver/presentation/screens/maps/map_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,7 +55,7 @@ Widget build(BuildContext context) {
                     iconOpacity: 2,
                     indicatorSize: const Size.fromWidth(100),
                     customIconBuilder: (context, local, global) => Text(
-                      local.value ? 'Active' : 'Inactive',
+                      local.value ? 'InActive' : 'Active',
                       style: TextStyle(
                           color: Color.lerp(Colors.black, Colors.white,
                               local.animationValue)),
@@ -141,6 +142,28 @@ Widget build(BuildContext context) {
             ),
           ],
         ),
+        const SizedBox(height: 20,),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Number Of Passenger',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueGrey
+              ),
+            ),
+            const SizedBox(height: 5,),
+            Text('${AppConst.numberOfPassenger}',
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 35,
+              color: Colors.blueGrey
+            ),
+            )
+          ],
+        )
       ],
     ),
   );

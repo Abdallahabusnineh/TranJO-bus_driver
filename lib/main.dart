@@ -20,6 +20,7 @@ Future<void> main() async {
   ServicesLocater().init();
   Bloc.observer = MyBlocObserver();
   token = await CashHelper.getData(key: "token") ?? "";
+  AppConst.numberOfPassenger=CashHelper.getData(key: "numberOfPassenger");
   runApp(const MyApp());
 }
 

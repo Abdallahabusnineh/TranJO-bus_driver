@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 abstract class BaseDriverControlRepository
 {
   Future<Either<Failure,String>>getToggleWorkingStatus();
-  Future<Either<Failure,String>>getDropBas();
-  Future<Either<Failure,String>>getAddPas();
+  Future<Either<Failure,int>>getDropBas();
+  Future<Either<Failure,int>>getAddPas();
   Future<Either<Failure,String>>getUpdateBusLocation();
 }

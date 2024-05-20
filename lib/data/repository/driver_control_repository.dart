@@ -21,7 +21,7 @@ class DriverControlRepository extends BaseDriverControlRepository
   }
 
   @override
-  Future<Either<Failure, String>> getDropBas()async {
+  Future<Either<Failure, int>> getDropBas()async {
     final result=await baseDriverControlDataSource.getDropPas();
     try
     {
@@ -33,7 +33,7 @@ class DriverControlRepository extends BaseDriverControlRepository
   }
 
   @override
-  Future<Either<Failure, String>> getAddPas()async {
+  Future<Either<Failure, int>> getAddPas()async {
     final result=await baseDriverControlDataSource.getAddPas();
     try
         {

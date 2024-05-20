@@ -9,7 +9,7 @@ class ServerErrorAddPassenger extends DriverControlState{
   ServerErrorAddPassenger({required this.error});
 }
 class SuccessAddPassenger extends DriverControlState {
-  final String result;
+  final int result;
   SuccessAddPassenger({required this.result});
 }
 
@@ -19,7 +19,7 @@ class ServerErrorDropPassenger extends DriverControlState{
   ServerErrorDropPassenger({required this.error});
 }
 class SuccessDropPassenger extends DriverControlState {
-  final String result;
+  final int result;
 
   SuccessDropPassenger(this.result);
 

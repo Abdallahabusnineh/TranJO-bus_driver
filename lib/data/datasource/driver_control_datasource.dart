@@ -10,8 +10,8 @@ import '../../core/utils/dio_helper.dart';
 abstract class BaseDriverControlDataSource
 {
   Future<String>getToggleWorkingStatus();
-  Future<String>getDropPas();
-  Future<String>getAddPas();
+  Future<int>getDropPas();
+  Future<int>getAddPas();
   Future<String>getUpdateBusLocation();
 }
 class DriverControlDataSource extends BaseDriverControlDataSource
@@ -47,7 +47,7 @@ class DriverControlDataSource extends BaseDriverControlDataSource
   }
 
   @override
-  Future<String> getDropPas()async {
+  Future<int> getDropPas()async {
     try {
       final result = await DioHelper.postData(
         url:dropPassenger,
@@ -79,7 +79,7 @@ class DriverControlDataSource extends BaseDriverControlDataSource
   }
 
   @override
-  Future<String> getAddPas()async {
+  Future<int> getAddPas()async {
     try {
       final result = await DioHelper.postData(
         url:addPassenger,

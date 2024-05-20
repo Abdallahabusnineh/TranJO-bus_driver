@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:bus_driver/core/utils/app_const.dart';
+import 'package:bus_driver/core/utils/cash_helper.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/base_usecase/base_usecase.dart';
@@ -52,7 +54,8 @@ class DriverControlBloc extends Bloc<AbstractDriverControlEvent, DriverControlSt
       },
           (r) {
             print('drop success');
-
+            AppConst.numberOfPassenger=r;
+            CashHelper.saveData(key: 'numberOfPassenger', value: r);
             emit(SuccessDropPassenger(r));
           });
     }
@@ -75,8 +78,9 @@ class DriverControlBloc extends Bloc<AbstractDriverControlEvent, DriverControlSt
       },
           (r) {
             print('add success');
-
-            emit(SuccessAddPassenger(result: r));
+            AppConst.numberOfPassenger=r;
+            CashHelper.saveData(key: 'numberOfPassenger', value: r);
+            emit(SuccessAddPassenger(result:r ));
           });
     }catch(e){
       print('error catch ${e.toString()}');
