@@ -25,15 +25,6 @@ class SuccessDropPassenger extends DriverControlState {
 
 }
 
-class LoadingResetSeats extends DriverControlState{}
-class ServerErrorResetSeats extends DriverControlState{
-  final String error;
-  ServerErrorResetSeats({required this.error});
-}
-class SuccessResetSeats extends DriverControlState {
-  final String result;
-  SuccessResetSeats({required this.result});
-}
 
 class LoadingToggleBus extends DriverControlState{}
 class ServerErrorToggleBus extends DriverControlState{
@@ -43,4 +34,13 @@ class ServerErrorToggleBus extends DriverControlState{
 class SuccessToggleBus extends DriverControlState {
   final String result;
   SuccessToggleBus({required this.result});
+}
+class ResetNumberOfPassengerLoadingState extends DriverControlState{}
+class ResetNumberOfPassengerSuccessState extends DriverControlState{
+  final int r;
+  ResetNumberOfPassengerSuccessState({required this.r});
+}
+class ResetNumberOfPassengerServerFailureState extends DriverControlState {
+  final String result;
+  ResetNumberOfPassengerServerFailureState({required this.result});
 }

@@ -6,5 +6,6 @@ abstract class BaseDriverControlRepository
   Future<Either<Failure,String>>getToggleWorkingStatus();
   Future<Either<Failure,int>>getDropBas();
   Future<Either<Failure,int>>getAddPas();
+  Future<Either<Failure,int>>resetNumberOfPassenger();
   Future<Either<Failure,String>>getUpdateBusLocation();
 }

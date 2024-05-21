@@ -8,29 +8,32 @@ import 'package:meta/meta.dart';
 import '../../../core/base_usecase/base_usecase.dart';
 import '../../../domain/usecases/add_pas_usecase.dart';
 import '../../../domain/usecases/drop_pas_usecase.dart';
+import '../../../domain/usecases/resetnumber_ofpassenger.dart';
 import '../../../domain/usecases/toggle_usecase.dart';
 
 part 'driver_control_event.dart';
 part 'driver_control_state.dart';
 
 class DriverControlBloc extends Bloc<AbstractDriverControlEvent, DriverControlState> {
-  DriverControlBloc(this.addBusUesCase,this.dropPasUseCase,this.toggleUseCase) : super(DriverControlInitialState()) {
+  DriverControlBloc(this.addBusUesCase,this.dropPasUseCase,this.toggleUseCase,this.resetNumberOfPassengerUseCase) : super(DriverControlInitialState()) {
     on<ToggleEvent>(_onToggleEvent);
     on<DropPassengerEvent>(_onDropPassengerEvent);
     on<AddPassengerEvent>(_onAddPassengerEvent);
     on<ResetSeatsNumberEvent>(_onResetSeatsNumberEvent);
+
   }
 
   AddPasUseCase addBusUesCase;
   ToggleUseCase toggleUseCase;
  bool toggle=false;
   DropPasUseCase dropPasUseCase;
+  ResetNumberOfPassengerUseCase resetNumberOfPassengerUseCase;
 
   Future<FutureOr<void>> _onToggleEvent(ToggleEvent event,
       Emitter<DriverControlState> emit) async {
     try{
       emit(LoadingToggleBus());
-      toggle = !toggle;
+      toggle =!toggle;
       final result = await toggleUseCase.call(const NoParameters());
       result.fold((l) => emit(ServerErrorToggleBus(error: l.message)),
           (r) {
@@ -45,8 +48,8 @@ class DriverControlBloc extends Bloc<AbstractDriverControlEvent, DriverControlSt
 
   Future<FutureOr<void>> _onDropPassengerEvent(DropPassengerEvent event,
       Emitter<DriverControlState> emit) async {
+    emit(LoadingDropPassenger());
    try {
-      emit(LoadingDropPassenger());
       final result = await dropPasUseCase.call(NoParameters());
       result.fold((l) {
         print("drop pass {$l.message}");
@@ -62,7 +65,6 @@ class DriverControlBloc extends Bloc<AbstractDriverControlEvent, DriverControlSt
     catch(e){
       print('error catch ${e.toString()}');
       emit(ServerErrorDropPassenger(error: "error catch ${e.toString()}"));
-
     }
   }
 
@@ -92,6 +94,23 @@ class DriverControlBloc extends Bloc<AbstractDriverControlEvent, DriverControlSt
 
 
 
-  FutureOr<void> _onResetSeatsNumberEvent(ResetSeatsNumberEvent event, Emitter<DriverControlState> emit) {
+  Future<FutureOr<void>> _onResetSeatsNumberEvent(ResetSeatsNumberEvent event, Emitter<DriverControlState> emit) async {
+    emit(ResetNumberOfPassengerLoadingState());
+    try{
+      final result = await resetNumberOfPassengerUseCase.call(const NoParameters());
+      result.fold((l) {
+        print("ResetNumberOfPassengerUseCase {$l.message}");
+        emit(ResetNumberOfPassengerServerFailureState(result: l.message));
+      },
+              (r) {
+            print('ResetNumberOfPassengerUseCase');
+            AppConst.numberOfPassenger=r;
+            CashHelper.saveData(key: 'numberOfPassenger', value: r);
+            emit(ResetNumberOfPassengerSuccessState(r:r ));
+          });
+    }catch(e){
+      print('error catch ${e.toString()}');
+      emit(ResetNumberOfPassengerServerFailureState(result:e.toString()));
+    }
   }
 }

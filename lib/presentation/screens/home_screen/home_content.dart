@@ -76,9 +76,11 @@ Widget build(BuildContext context) {
                     selectedIconScale: 1,
                     onChanged: (toggle) {
                       bloc.add(ToggleEvent());
-                       if(blocListener.state is SuccessToggleBus)
-                                showToast(text: 'done', state: ToastState.SUCCESS);
-                    },
+                       if(blocListener.state is SuccessToggleBus) {
+                          print('abdallah toggle ${bloc.toggle}');
+                          showToast(text: 'done', state: ToastState.SUCCESS);
+                        }
+                      },
                   );
                 },
               )
@@ -102,10 +104,7 @@ Widget build(BuildContext context) {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             blocListener.state is LoadingDropPassenger
-                ? Center(
-                child: CircularProgressIndicator(
-                  color: Colors.blueGrey,
-                ))
+                ? SizedBox()
                 : IconButton(
               onPressed: () {
                 bloc.add(DropPassengerEvent());
@@ -116,8 +115,12 @@ Widget build(BuildContext context) {
             SizedBox(
               width: 50,
             ),
+            blocListener.state is ResetNumberOfPassengerLoadingState?
+            SizedBox():
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  bloc.add(ResetSeatsNumberEvent());
+                },
                 child: Text(
                   'reset seats',
                   style: TextStyle(
@@ -129,10 +132,7 @@ Widget build(BuildContext context) {
               width: 50,
             ),
             blocListener.state is LoadingAddPassenger
-                ? Center(
-                child: CircularProgressIndicator(
-                  color: Colors.blueGrey,
-                ))
+                ? SizedBox()
                 : IconButton(
               onPressed: () {
                 bloc.add(AddPassengerEvent());

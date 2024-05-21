@@ -7,15 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/common_widgets/show_toast.dart';
+import '../../../core/services/services_locater.dart';
+import '../user_info/user_info_view.dart';
 
 class SettingContent extends StatelessWidget {
   const SettingContent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    LogoutBloc blocLogout = BlocProvider.of<LogoutBloc>(context);
+   /* LogoutBloc blocLogout = BlocProvider.of<LogoutBloc>(context);
     LogoutBloc blocListenerLogOut = context.watch<LogoutBloc>();
-
+*/
     return SingleChildScrollView(
       child: Column(children: [
         Container(
@@ -60,7 +62,7 @@ class SettingContent extends StatelessWidget {
           children: [
             TextButton(
                 onPressed: () {
-                  //navigateTo(context, ProfileSceeenView());
+                  navigateTo(context, UserInfoView());
                 },
                 child: const Text(
                   'User Info',
@@ -70,7 +72,7 @@ class SettingContent extends StatelessWidget {
             Container(
               child: IconButton(
                 onPressed: () {
-                  //navigateTo(context, ProfileSceeenView());
+                  navigateTo(context, UserInfoView());
                 },
                 icon: const Icon(
                   Icons.arrow_forward_ios_sharp,
@@ -82,29 +84,7 @@ class SettingContent extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        Row(
-          children: [
-            TextButton(
-                onPressed: () {
-                  //navigateTo(context, UserChangePasswordView());
-                },
-                child: const Text(
-                  'Change Password',
-                  style: TextStyle(color: Colors.grey, fontSize: 20),
-                )),
-            const Spacer(),
-            Container(
-              child: IconButton(
-                onPressed: () {
-                  // navigateTo(context, UserChangePasswordView());
-                },
-                icon: const Icon(
-                  Icons.arrow_forward_ios_sharp,
-                ),
-              ),
-            ),
-          ],
-        ),
+
         const SizedBox(
           height: 30,
         ),
@@ -126,29 +106,6 @@ class SettingContent extends StatelessWidget {
         const Divider(
           endIndent: 15,
           indent: 15,
-        ),
-        Row(
-          children: [
-            TextButton(
-                onPressed: () {
-                  //navigateTo(context, FeedbackView());
-                },
-                child: const Text(
-                  'Feedback',
-                  style: TextStyle(color: Colors.grey, fontSize: 20),
-                )),
-            const Spacer(),
-            Container(
-              child: IconButton(
-                onPressed: () {
-                  //navigateTo(context, FeedbackView());
-                },
-                icon: const Icon(
-                  Icons.feed,
-                ),
-              ),
-            ),
-          ],
         ),
         const SizedBox(
           height: 10,
@@ -205,35 +162,48 @@ class SettingContent extends StatelessWidget {
             ),
           ],
         ),
+        SizedBox(height: 100,),
         BlocBuilder<LogoutBloc, LogoutState>(
           builder: (context, state) {
-            return Container(
-              decoration: const BoxDecoration(),
+            LogoutBloc blocLogout = BlocProvider.of<LogoutBloc>(context);
+            return state is LogoutLoadingState
+                ? CircularProgressIndicator(
+              color: Colors.blue.shade700,
+            )
+                : Container(
               child: ElevatedButton(
                 onPressed: () {
                   blocLogout.add(LogoutStartProcessEvent());
-                  if (state is LogoutSuccessState) {
-                    navigateTo(context, LoginScreenView());
-                    showToast(
-                        text: 'Logout is done',
-                        state: ToastState.SUCCESS);
-                  }
+                   if (state is LogoutSuccessState) {
+                  navigateTo(context, LoginScreenView());
+                  showToast(
+                      text: 'Logout is done',
+                      state: ToastState.SUCCESS);
+                  /*if(context.read<DriverControlBloc>().add()==true)
+                    {
+                      context.read<DriverControlBloc>().add(ToggleEvent());
 
+                    }
+                  else
+                    print('bus not working');
+                  */
+                   }
+                        if(state is LogoutServerFailureState)
+                          showToast(text: 'Logout is failued', state: ToastState.ERROR);
                 },
                 style: ElevatedButton.styleFrom(
-                    padding:
-                    const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 100, vertical: 20),
                     // Adjust padding for bigger size
-                    backgroundColor: Color(0xFF607D8B)),
-                child: const Text('Log Out',
+                    backgroundColor: Color.fromARGB(255, 96, 125, 139)),
+                child: Text('Log Out',
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     )),
               ),
-
-
+              decoration: BoxDecoration(),
             );
           },
         ),
@@ -244,4 +214,3 @@ class SettingContent extends StatelessWidget {
     );
   }
 }
-

@@ -8,6 +8,10 @@ String token="";
   String login="/api/driver/login";
   String appLogout="/logout";
   String updateBusLocation="/api/driver/updateBusLocation";
+  String  resetNumberOfPass="/api/driver/rest-pas";
+  String  userDetails="/api/driver/getDriver";
+String userDetailsEmail='';
+String userDetailsName='';
   class AppConst
   {
     static int numberOfPassenger=CashHelper.getData(key: "numberOfPassenger");

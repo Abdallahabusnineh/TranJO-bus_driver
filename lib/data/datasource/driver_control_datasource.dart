@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:bus_driver/core/base_usecase/base_usecase.dart';
 import 'package:bus_driver/core/utils/app_const.dart';
 import 'package:dio/dio.dart';
 import '../../core/error/exceptions.dart';
@@ -12,6 +10,7 @@ abstract class BaseDriverControlDataSource
   Future<String>getToggleWorkingStatus();
   Future<int>getDropPas();
   Future<int>getAddPas();
+  Future<int>resetNumberOfPassenger();
   Future<String>getUpdateBusLocation();
 }
 class DriverControlDataSource extends BaseDriverControlDataSource
@@ -127,6 +126,35 @@ class DriverControlDataSource extends BaseDriverControlDataSource
       throw ServerExceptions(
           errorMessageModel:
           ErrorMessageModel.fromJson("Error"));
+    } catch (e) {
+      throw ServerExceptions(
+          errorMessageModel: ErrorMessageModel.fromJson(e.toString()));
+    }
+  }
+
+  @override
+  Future<int> resetNumberOfPassenger() async {
+    try {
+      final result = await DioHelper.postData(
+        url: resetNumberOfPass,
+        token: token,
+        data: {},
+      );
+      if (result.statusCode == 200) {
+        return result.data;
+      } else {
+        throw ServerExceptions(
+            errorMessageModel: ErrorMessageModel.fromJson(result.statusMessage!));
+      }
+    } on DioException catch (e) {
+      log("resetNumberOfPassenger datasource ${e.requestOptions.uri}");
+      log("resetNumberOfPassenger datasource ${e.requestOptions.uri}");
+      log("resetNumberOfPassenger datasource ${e.response!.statusCode}");
+      log("resetNumberOfPassenger datasource ${e.response!.data}");
+      log("resetNumberOfPassenger datasource ${e.requestOptions.uri}");
+      throw ServerExceptions(
+          errorMessageModel:
+          ErrorMessageModel.fromJson(e.message!));
     } catch (e) {
       throw ServerExceptions(
           errorMessageModel: ErrorMessageModel.fromJson(e.toString()));

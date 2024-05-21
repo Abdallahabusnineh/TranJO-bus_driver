@@ -7,15 +7,20 @@ import 'package:bus_driver/domain/base_repository/driver_control.dart';
 import 'package:bus_driver/domain/usecases/add_pas_usecase.dart';
 import 'package:bus_driver/domain/usecases/drop_pas_usecase.dart';
 import 'package:bus_driver/domain/usecases/login_usecase.dart';
+import 'package:bus_driver/domain/usecases/resetnumber_ofpassenger.dart';
 import 'package:bus_driver/domain/usecases/toggle_usecase.dart';
 import 'package:bus_driver/domain/usecases/update_bus_location_usecase.dart';
 import 'package:bus_driver/presentation/blocs/Login/login_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../data/datasource/logout_remotedatasource.dart';
+import '../../data/datasource/user_details_datasource.dart';
 import '../../data/repository/logout_repository.dart';
+import '../../data/repository/user_details_repository.dart';
 import '../../domain/base_repository/logout_base_repository.dart';
+import '../../domain/base_repository/user_details_base_repository.dart';
 import '../../domain/usecases/logout_usecase.dart';
+import '../../domain/usecases/user_details_usecase.dart';
 
 final sl = GetIt.instance;
 class ServicesLocater {
@@ -41,6 +46,7 @@ class ServicesLocater {
 
     //=============================UseCase=============================
     sl.registerLazySingleton(() => AddPasUseCase(sl()));
+    sl.registerLazySingleton(() => ResetNumberOfPassengerUseCase(sl()));
     sl.registerLazySingleton(() => UpdateBusLocationUseCase(sl()));
     sl.registerLazySingleton(() => ToggleUseCase(sl()));
     sl.registerLazySingleton(() => DropPasUseCase(sl()));
@@ -55,6 +61,11 @@ class ServicesLocater {
     sl.registerLazySingleton<LogOutBaseRepository>(() => LogOutRepository(
         sl()));
     sl.registerLazySingleton<LogOutBaseDataSource>(() => LogOutDataSource());
+
+    //user details
+    sl.registerLazySingleton(()=>UserDetailsUseCase(sl()));
+    sl.registerLazySingleton<BaseUserDetailsRepository>(()=>UserDetailsRepository(sl()));
+    sl.registerLazySingleton<BaseUserDetailsDataSource>(()=>UserDetailsDataSource());
 
 
 

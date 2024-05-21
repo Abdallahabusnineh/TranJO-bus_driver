@@ -57,4 +57,16 @@ class DriverControlRepository extends BaseDriverControlRepository
 
   }
 
+  @override
+  Future<Either<Failure, int>> resetNumberOfPassenger() async {
+    final result=await baseDriverControlDataSource.resetNumberOfPassenger();
+    try
+    {
+      return Right(result);
+    }on ServerExceptions catch(e)
+    {
+      return Left(ServerFailure(e.errorMessageModel.message));
+    }
+  }
+
 }

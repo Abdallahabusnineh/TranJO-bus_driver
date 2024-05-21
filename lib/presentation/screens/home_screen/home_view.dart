@@ -10,11 +10,8 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => DriverControlBloc(sl(), sl(), sl()),
-      child: Scaffold(
-        body: HomeContent(),
-      ),
+    return Scaffold(
+      body: HomeContent(),
     );
   }
 }

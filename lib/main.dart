@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:bus_driver/core/services/services_locater.dart';
 import 'package:bus_driver/core/utils/cash_helper.dart';
 import 'package:bus_driver/core/utils/dio_helper.dart';
+import 'package:bus_driver/presentation/blocs/driver_control_bloc/driver_control_bloc.dart';
 import 'package:bus_driver/presentation/blocs/maps/maps_bloc.dart';
 import 'package:bus_driver/presentation/screens/login/login_view.dart';
 import 'package:bus_driver/presentation/screens/main_screen/main_screen_view.dart';
@@ -20,7 +21,8 @@ Future<void> main() async {
   ServicesLocater().init();
   Bloc.observer = MyBlocObserver();
   token = await CashHelper.getData(key: "token") ?? "";
-  AppConst.numberOfPassenger=CashHelper.getData(key: "numberOfPassenger");
+  AppConst.numberOfPassenger =
+      await CashHelper.getData(key: "numberOfPassenger") ?? 0;
   runApp(const MyApp());
 }
 
@@ -32,8 +34,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     print('TOKEN ::: $token');
     return Sizer(builder: (context, orientation, deviceType) {
-      return BlocProvider(
-        create: (context) => MapsBloc()..add(GetCurrentLocation()),
+      return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) =>
+            MapsBloc()
+              ..add(GetCurrentLocation()),
+          ),
+          BlocProvider(
+            create: (context) => DriverControlBloc(sl(), sl(), sl(),sl()),
+          ),
+        ],
         child: MaterialApp(
             title: 'Flutter Demo',
             debugShowCheckedModeBanner: false,
