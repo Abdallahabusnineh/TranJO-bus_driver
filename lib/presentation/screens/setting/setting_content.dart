@@ -6,7 +6,6 @@ import 'package:bus_driver/presentation/screens/login/login_view.dart';
 import 'package:bus_driver/presentation/screens/policy/policy_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../core/common_widgets/show_toast.dart';
 import '../user_info/user_info_view.dart';
 
