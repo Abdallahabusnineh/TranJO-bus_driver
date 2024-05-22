@@ -9,7 +9,6 @@ import 'package:bus_driver/presentation/screens/main_screen/main_screen_view.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
-
 import 'core/utils/app_const.dart';
 import 'core/utils/bloc_observer.dart';
 
@@ -57,7 +56,6 @@ class MyApp extends StatelessWidget {
       );
     });
   }
-
   Widget startPage() {
     if (token != "") {
       return const MainScreenView();

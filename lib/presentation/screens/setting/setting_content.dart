@@ -1,13 +1,13 @@
 import 'package:bus_driver/core/common_widgets/navigations_types.dart';
-import 'package:bus_driver/core/utils/app_const.dart';
 import 'package:bus_driver/presentation/blocs/driver_control_bloc/driver_control_bloc.dart';
 import 'package:bus_driver/presentation/blocs/logout/logout_bloc.dart';
+import 'package:bus_driver/presentation/screens/about_us_screen/about_us_view.dart';
 import 'package:bus_driver/presentation/screens/login/login_view.dart';
+import 'package:bus_driver/presentation/screens/policy/policy_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/common_widgets/show_toast.dart';
-import '../../../core/services/services_locater.dart';
 import '../user_info/user_info_view.dart';
 
 class SettingContent extends StatelessWidget {
@@ -15,7 +15,7 @@ class SettingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   /* LogoutBloc blocLogout = BlocProvider.of<LogoutBloc>(context);
+    /* LogoutBloc blocLogout = BlocProvider.of<LogoutBloc>(context);
     LogoutBloc blocListenerLogOut = context.watch<LogoutBloc>();
 */
     return SingleChildScrollView(
@@ -62,7 +62,7 @@ class SettingContent extends StatelessWidget {
           children: [
             TextButton(
                 onPressed: () {
-                  navigateTo(context, UserInfoView());
+                  navigateTo(context, const UserInfoView());
                 },
                 child: const Text(
                   'User Info',
@@ -72,7 +72,7 @@ class SettingContent extends StatelessWidget {
             Container(
               child: IconButton(
                 onPressed: () {
-                  navigateTo(context, UserInfoView());
+                  navigateTo(context, const UserInfoView());
                 },
                 icon: const Icon(
                   Icons.arrow_forward_ios_sharp,
@@ -114,7 +114,7 @@ class SettingContent extends StatelessWidget {
           children: [
             TextButton(
                 onPressed: () {
-                  //navigateTo(context, PolicyView());
+                  navigateTo(context, PolicyView());
                 },
                 child: const Text(
                   'Policy',
@@ -124,7 +124,7 @@ class SettingContent extends StatelessWidget {
             Container(
               child: IconButton(
                 onPressed: () {
-                  //navigateTo(context, PolicyView());
+                  navigateTo(context, PolicyView());
                 },
                 icon: const Icon(
                   Icons.policy,
@@ -140,21 +140,19 @@ class SettingContent extends StatelessWidget {
           children: [
             TextButton(
                 onPressed: () {
-                  //navigateTo(context, AboutUsView());
+                  navigateTo(context, AboutUsView());
                 },
                 child: const Text(
                   'About Us',
                   style: TextStyle(color: Colors.grey, fontSize: 20),
                 )),
             const Spacer(),
-            Container(
-              child: IconButton(
-                onPressed: () {
-                  //navigateTo(context, AboutUsView());
-                },
-                icon: const Icon(
-                  Icons.info,
-                ),
+            IconButton(
+              onPressed: () {
+                navigateTo(context, AboutUsView());
+              },
+              icon: const Icon(
+                Icons.info,
               ),
             ),
             const SizedBox(
@@ -162,49 +160,57 @@ class SettingContent extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 100,),
+        const SizedBox(
+          height: 100,
+        ),
         BlocBuilder<LogoutBloc, LogoutState>(
           builder: (context, state) {
             LogoutBloc blocLogout = BlocProvider.of<LogoutBloc>(context);
             return state is LogoutLoadingState
                 ? CircularProgressIndicator(
-              color: Colors.blue.shade700,
-            )
+                    color: Colors.blue.shade700,
+                  )
                 : Container(
-              child: ElevatedButton(
-                onPressed: () {
-                  blocLogout.add(LogoutStartProcessEvent());
-                   if (state is LogoutSuccessState) {
-                  navigateTo(context, LoginScreenView());
-                  showToast(
-                      text: 'Logout is done',
-                      state: ToastState.SUCCESS);
-                  /*if(context.read<DriverControlBloc>().add()==true)
-                    {
-                      context.read<DriverControlBloc>().add(ToggleEvent());
-
-                    }
-                  else
-                    print('bus not working');
-                  */
-                   }
-                        if(state is LogoutServerFailureState)
-                          showToast(text: 'Logout is failued', state: ToastState.ERROR);
-                },
-                style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 100, vertical: 20),
-                    // Adjust padding for bigger size
-                    backgroundColor: Color.fromARGB(255, 96, 125, 139)),
-                child: Text('Log Out',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    )),
-              ),
-              decoration: BoxDecoration(),
-            );
+                    decoration: const BoxDecoration(),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        //print('the dat we want it is ${context.read<DriverControlBloc>().toggle}');
+                        blocLogout.add(LogoutStartProcessEvent());
+                        if (state is LogoutSuccessState) {
+                          navigateTo(context, LoginScreenView());
+                          showToast(
+                              text: 'Logout is done',
+                              state: ToastState.SUCCESS);
+                          //print(
+                          /*    'toggle for logout ${context.read<DriverControlBloc>().toggle}');
+                          if (context.read<DriverControlBloc>().toggle ==
+                              true) {
+                            context
+                                .read<DriverControlBloc>()
+                                .add(ToggleEvent());
+                          } else
+                            print('bus not working');
+                       */ }
+                        if (state is LogoutServerFailureState) {
+                          showToast(
+                              text: 'Logout is failued',
+                              state: ToastState.ERROR);
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 100, vertical: 20),
+                          // Adjust padding for bigger size
+                          backgroundColor:
+                              const Color.fromARGB(255, 96, 125, 139)),
+                      child: const Text('Log Out',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          )),
+                    ),
+                  );
           },
         ),
         const SizedBox(
