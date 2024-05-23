@@ -25,7 +25,6 @@ class DriverControlBloc
 
   AddPasUseCase addBusUesCase;
   ToggleUseCase toggleUseCase;
-  bool toggle = false;
   DropPasUseCase dropPasUseCase;
   ResetNumberOfPassengerUseCase resetNumberOfPassengerUseCase;
 

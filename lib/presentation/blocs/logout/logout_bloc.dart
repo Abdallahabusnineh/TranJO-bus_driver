@@ -25,6 +25,9 @@ class LogoutBloc extends Bloc<AbstractLogoutEvent, LogoutState> {
         print('logout is done ${l.message}');
         emit(LogoutServerFailureState(l.message));
       }, (r) {
+        if(toggle==false) {
+          toggle = true;
+        }
         CashHelper.removeData(key: 'token').then((value) {
           print('success logout youserf');
           token = "";

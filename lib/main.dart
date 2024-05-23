@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
             MapsBloc()
               ..add(GetCurrentLocation()),
           ),
+
           BlocProvider(
             create: (context) => DriverControlBloc(sl(), sl(), sl(),sl()),
           ),
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
             ),
-            home: startPage()
+            home: LoginScreenView()
         ),
       );
     });

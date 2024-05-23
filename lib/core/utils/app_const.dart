@@ -1,4 +1,5 @@
 import 'package:bus_driver/core/utils/cash_helper.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 const String GOOGLE_MAP_API_KEY = "AIzaSyB5uJvWTi4s65y_ZR8CAimaj1cBItFQN8k";
 String token="";
   String toggleWorkingStatus="/api/driver/toggleWorkingStatus";
@@ -11,7 +12,9 @@ String token="";
   String  userDetails="/api/driver/getDriver";
 String userDetailsEmail='';
 String userDetailsName='';
+bool toggle =  false;
   class AppConst
   {
+
     static int numberOfPassenger=CashHelper.getData(key: "numberOfPassenger");
   }

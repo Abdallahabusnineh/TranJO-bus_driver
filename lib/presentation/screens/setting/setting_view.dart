@@ -10,11 +10,8 @@ class SettingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LogoutBloc(sl()),
-      child: Scaffold(
-        body: SettingContent(),
-      ),
+    return Scaffold(
+      body: SettingContent(),
     );
   }
 }

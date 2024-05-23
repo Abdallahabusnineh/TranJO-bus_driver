@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:bus_driver/core/common_widgets/show_toast.dart';
 import 'package:bus_driver/core/utils/app_const.dart';
+import 'package:bus_driver/core/utils/app_const.dart';
 import 'package:bus_driver/presentation/screens/maps/map_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,6 +46,7 @@ class _HomeContentState extends State<HomeContent> {
                     color: AppColors.myGrey,
                   ),
                   child: MapBuilder(
+
                     onMapCreated: (GoogleMapController controller) {
                       _controller.complete(controller);
                       MabBloc.setterNewGoogleController = controller;
@@ -54,7 +56,7 @@ class _HomeContentState extends State<HomeContent> {
                 BlocBuilder<DriverControlBloc, DriverControlState>(
                   builder: (context, state) {
                     return AnimatedToggleSwitch<bool>.size(
-                      current: bloc.toggle,
+                      current: toggle,
                       //bloc.toggle,
                       values: [true, false],
                       iconOpacity: 2,
@@ -82,7 +84,7 @@ class _HomeContentState extends State<HomeContent> {
                       onChanged: (toggle) {
                         bloc.add(ToggleEvent());
                         if (blocListener.state is SuccessToggleBus) {
-                          print('abdallah toggle ${bloc.toggle}');
+                          print('abdallah toggle ${toggle}');
                           showToast(text: 'done', state: ToastState.SUCCESS);
                         }
                       },
