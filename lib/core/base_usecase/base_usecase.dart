@@ -11,6 +11,26 @@ class NoParameters extends Equatable{
   List<Object?> get props => [];
 
 }
+class ForgotPasswordParameter extends Equatable{
+  final String email;
+
+
+  ForgotPasswordParameter(this.email);
+  @override
+  // TODO: implement props
+  List<Object?> get props => [email];
+
+}
+
+class VerificationParameter extends Equatable{
+  final String code;
+  final String newPassword;
+
+  VerificationParameter(this.code, this.newPassword);
+  @override
+  // TODO: implement props
+  List<Object?> get props => [code,newPassword];
+}
 
 class LoginParameter extends Equatable{
   final String email;

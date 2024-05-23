@@ -10,6 +10,9 @@ String token="";
   String updateBusLocation="/api/driver/updateBusLocation";
   String  resetNumberOfPass="/api/driver/rest-pas";
   String  userDetails="/api/driver/getDriver";
+ String forgotPassword = '/api/driver/reset-password';
+ String verificationCodee = '/api/driver/change-password';
+
 String userDetailsEmail='';
 String userDetailsName='';
 bool toggle =  false;

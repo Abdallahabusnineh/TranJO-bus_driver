@@ -1,28 +1,26 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:bus_driver/core/common_widgets/navigations_types.dart';
-import 'package:bus_driver/presentation/blocs/Login/login_bloc.dart';
-import 'package:bus_driver/presentation/screens/forgot_password/forgotpassword_view.dart';
+import 'package:bus_driver/presentation/blocs/forgotpassword/verification_bloc.dart';
+import 'package:bus_driver/presentation/blocs/forgotpassword/verification_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginContent extends StatelessWidget {
-  LoginContent({Key? key}) : super(key: key);
-
+class VerificationContent extends StatelessWidget {
+  const VerificationContent({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    LoginBloc bloc = BlocProvider.of<LoginBloc>(context);
-    LoginBloc blocListener = context.watch<LoginBloc>();
+    VerificationBloc  bloc=BlocProvider.of<VerificationBloc>(context);
+    VerificationBloc  blocListener=context.watch<VerificationBloc>();
     return Form(
       key: bloc.formKey,
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-          Colors.indigoAccent,
-          Colors.deepPurple.shade700,
-          Colors.blueAccent,
+              Colors.indigoAccent,
+              Colors.deepPurple.shade700,
+              Colors.blueAccent,
 
-        ])),
+            ])),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -37,7 +35,7 @@ class LoginContent extends StatelessWidget {
                   FadeInUp(
                       duration: Duration(milliseconds: 1300),
                       child: Text(
-                        "Login",
+                        "verification",
                         style: TextStyle(color: Colors.white, fontSize: 40),
                       )),
                   SizedBox(
@@ -46,7 +44,7 @@ class LoginContent extends StatelessWidget {
                   FadeInUp(
                     duration: Duration(milliseconds: 1300),
                     child: Text(
-                      'Welcome Back',
+                      'Please verify the code sent to your email',
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ),
@@ -68,21 +66,26 @@ class LoginContent extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        const SizedBox(
-                          height: 60,
+                        Container(
+                          child: Image(
+                            height: 200,
+                            width: 200,
+                            image: AssetImage('assets/images/verification.jpg'),
+                          ),
                         ),
+
                         Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: [
                                 const BoxShadow(
-                                    color: Colors.indigo,
+                                    color: Color.fromRGBO(225, 95, 27, 0.3),
                                     blurRadius: 20,
                                     offset: Offset(0, 10))
                               ]),
                           child: Column(
-                            children: <Widget>[
+                            children: [
                               Container(
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
@@ -92,17 +95,17 @@ class LoginContent extends StatelessWidget {
                                 child: FadeInUp(
                                   duration: Duration(milliseconds: 1000),
                                   child: TextFormField(
-                                    controller: bloc.emailNameController,
+                                    controller: bloc.codeNameController,
                                     keyboardType: TextInputType.name,
                                     decoration: InputDecoration(
-                                        hintText: 'email',
-                                        prefixIcon: Icon(Icons.person),
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
+                                        hintText: 'Code',
+                                        prefixIcon:
+                                            Icon(Icons.verified_user_rounded),
+                                        hintStyle: TextStyle(color: Colors.grey),
                                         border: InputBorder.none),
                                     validator: (value) {
                                       if (value!.isEmpty)
-                                        return 'Please enter email ';
+                                        return 'Please enter code';
                                     },
                                   ),
                                 ),
@@ -117,83 +120,57 @@ class LoginContent extends StatelessWidget {
                                   duration: Duration(milliseconds: 1000),
                                   child: TextFormField(
                                     obscureText: blocListener.showPassword,
-                                    controller: bloc.passwordController,
-                                    keyboardType: TextInputType.visiblePassword,
+                                    controller:bloc.newPasswordNameController,
+                                    keyboardType: TextInputType.name,
                                     decoration: InputDecoration(
-                                        hintText: 'Password',
+
+                                        hintText: 'Enter New Password',
+
                                         prefixIcon: Icon(Icons.security),
-                                        suffixIcon: IconButton(
-                                            onPressed: () {
-                                              bloc.add(ShowPasswordEvent());
-                                            },
-                                            icon: blocListener.showPassword
-                                                ? Icon(Icons.remove_red_eye)
-                                                : Icon(Icons
-                                                    .remove_red_eye_outlined)),
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
+                                        suffixIcon:IconButton(onPressed: (){
+                                          bloc.add(VerificationShowPasswordEvent());
+                                        },icon: blocListener.showPassword?Icon(Icons.visibility_off_rounded):Icon(Icons.remove_red_eye_outlined),),
+                                        hintStyle: TextStyle(color: Colors.grey),
                                         border: InputBorder.none),
                                     validator: (value) {
                                       if (value!.isEmpty)
-                                        return 'password is too short';
+                                        return 'Please enter new password';
                                     },
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            navigateTo(context, ForgotPasswordView());
-                          },
-                          child: FadeInUp(
-                            duration: Duration(milliseconds: 1000),
-                            child: Text(
-                              'Forgot Password',
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ),
-                        ),
                         SizedBox(
-                          height: 40,
+                          height: 20,
                         ),
-                        blocListener.state is LoginLoadingState
-                            ? Center(
-                                child: CircularProgressIndicator(
-                                color: Colors.black54,
-                              ))
-                            : Container(
-                                height: 50,
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 50),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: Colors.indigo.shade500),
-                                child: Center(
-                                    child: FadeInUp(
-                                  duration: Duration(milliseconds: 1000),
-                                  child: TextButton(
-                                    onPressed: () {
-                                      if (bloc.formKey.currentState!.validate())
-                                        bloc.add(LoginStartProcessEvent(
-                                            email:
-                                                bloc.emailNameController.text,
-                                            password:
-                                                bloc.passwordController.text));
-                                 print('email ${bloc.emailNameController.text} password ${    bloc.passwordController.text}');
-                                    },
-                                    child: Text(
-                                      'Login',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ))),
+                        blocListener.state is VerificationLoadingState?Center(child: CircularProgressIndicator(color: Colors.blue.shade700,)):
+
+                        Container(
+                            height: 50,
+                            margin: const EdgeInsets.symmetric(horizontal: 50),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Colors.blue.shade900),
+                            child: Center(
+                                child: FadeInUp(
+                              duration: Duration(milliseconds: 1000),
+                              child: TextButton(
+                                onPressed: () {
+                                     if(bloc.formKey.currentState!.validate())
+                                       bloc.add(VerificationStartProcessEvent(code: bloc.codeNameController.text,newPassword: bloc.newPasswordNameController.text));
+
+                                },
+                                child: Text(
+                                  'verification',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+
+                            ))),
                         SizedBox(
                           height: 10,
                         ),
