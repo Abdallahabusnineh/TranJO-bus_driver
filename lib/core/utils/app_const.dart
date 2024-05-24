@@ -1,6 +1,6 @@
 import 'package:bus_driver/core/utils/cash_helper.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-const String GOOGLE_MAP_API_KEY = "AIzaSyB5uJvWTi4s65y_ZR8CAimaj1cBItFQN8k";
+const String GOOGLE_MAP_API_KEY = "API-key";
 String token="";
   String toggleWorkingStatus="/api/driver/toggleWorkingStatus";
   String dropPassenger="/api/driver/drop-pas";
